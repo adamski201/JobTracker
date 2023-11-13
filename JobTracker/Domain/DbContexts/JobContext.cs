@@ -1,20 +1,20 @@
-﻿using JobTracker.Entities;
+﻿using JobTracker.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace JobTracker.DbContexts
+namespace JobTracker.Domain.DbContexts
 {
     public class JobContext : DbContext
     {
         public DbSet<Job> Jobs { get; set; }
 
-        public JobContext(DbContextOptions<JobContext> options) : base(options) 
+        public JobContext(DbContextOptions<JobContext> options) : base(options)
         {
-            
+
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Job>().HasData(
+            /*modelBuilder.Entity<Job>().HasData(
                 new Job
                 {
                     Id = 1,
@@ -27,7 +27,7 @@ namespace JobTracker.DbContexts
                     Status = JobStatus.Success
                 });
 
-            base.OnModelCreating(modelBuilder);
+            base.OnModelCreating(modelBuilder);*/
         }
     }
 }

@@ -1,4 +1,4 @@
-using JobTracker.DbContexts;
+using JobTracker.Domain.DbContexts;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
 

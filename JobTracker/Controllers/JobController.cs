@@ -5,11 +5,11 @@ namespace JobTracker.Controllers
     [ApiController]
     public class JobController
     {
-        private readonly ILogger logger;
+        private readonly ILogger _logger;
 
         public JobController(ILogger logger)
         {
-            this.logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
     }
 }
