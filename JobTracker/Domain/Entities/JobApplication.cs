@@ -9,10 +9,8 @@ namespace JobTracker.Domain.Entities
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
-        [Required]
         public Job Job { get; set; }
-        [Required]
-        public Company Employer { get; set; }
+        public int JobId { get; set; }
         public ICollection<Interview> Interviews { get; set; } = new List<Interview>();
         public DateTime InitialDateAdvertised { get; set; }
         public DateTime InitialApplicationDate { get; set; }

@@ -3,11 +3,11 @@
 namespace JobTracker.Controllers
 {
     [ApiController]
-    public class JobController
+    public class JobApplicationController
     {
         private readonly ILogger _logger;
 
-        public JobController(ILogger logger)
+        public JobApplicationController(ILogger logger)
         {
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }

@@ -3,6 +3,8 @@
     public class Interview
     {
         public int Id { get; set; }
+        public JobApplication JobApplication { get; set; }
+        public int JobApplicationId { get; set; }
         public InterviewStatus Status { get; set; }
         public DateTime InterviewDate { get; set; }
         public DateTime Deadline { get; set; }
