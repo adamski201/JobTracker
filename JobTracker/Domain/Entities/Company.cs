@@ -13,6 +13,6 @@ namespace JobTracker.Domain.Entities
         public string? Description { get; set; }
         public string? Industry { get; set; }
         public Location? Location { get; set; }
-        public ICollection<Job> Job { get; set; } = new List<Job>();
+        public ICollection<Job> Jobs { get; set; } = new List<Job>();
     }
 }

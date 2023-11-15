@@ -1,8 +1,10 @@
+using JobTracker.Data_Access.Repositories;
 using JobTracker.Domain.DbContexts;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
+using Microsoft.AspNetCore.Mvc;
 
-using var log = new LoggerConfiguration()
+Log.Logger = new LoggerConfiguration()
     .MinimumLevel.Debug()
     .WriteTo.Console()
     .CreateLogger();
@@ -11,7 +13,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Host.UseSerilog();
 
 // Add services to the container.
-builder.Services.AddControllers();
+builder.Services.AddControllers()
+    .AddNewtonsoftJson();
 
 builder.Services.AddDbContext<JobTrackerContext>(options =>
     options.UseSqlite(builder.Configuration.GetConnectionString("JobTrackerConnectionString")));
@@ -19,6 +22,10 @@ builder.Services.AddDbContext<JobTrackerContext>(options =>
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
+builder.Services.AddScoped<ICompanyRepository, CompanyRepository>();
 
 var app = builder.Build();
 
