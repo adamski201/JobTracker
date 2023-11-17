@@ -21,7 +21,7 @@ namespace JobTracker.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Company>>> GetCompaniesAsync(bool includeJobs = false)
+        public async Task<IActionResult> GetCompanies(bool includeJobs = false)
         {
             var companies = await _companyRepository.GetCompaniesAsync(includeJobs);
 
@@ -33,6 +33,42 @@ namespace JobTracker.Controllers
             return Ok(_mapper.Map<IEnumerable<CompanyWithoutJobsDto>>(companies));
         }
 
-        
+        [HttpGet("{companyId}", Name = "GetCompany")]
+        public async Task<IActionResult> GetCompany(int companyId, bool includeJob = false)
+        {
+            var company = await _companyRepository.GetCompanyAsync(companyId, includeJob);
+
+            if (company == null)
+            {
+                return NotFound();
+            }
+
+            if (includeJob)
+            {
+                return Ok(_mapper.Map<CompanyDto>(company));
+            }
+
+            return Ok(_mapper.Map<CompanyWithoutJobsDto>(company));
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CreateCompany(CompanyForCreationDto company)
+        {
+            if (company == null)
+            {
+                return BadRequest();
+            }
+
+            var companyToCreate = _mapper.Map<Company>(company);
+
+            if (!await _companyRepository.AddCompanyAsync(companyToCreate))
+            {
+                return StatusCode(500, "An error occurred while handling your request.");
+            }
+
+            var companyToReturn = _mapper.Map<CompanyDto>(companyToCreate);
+
+            return CreatedAtRoute("GetCompany", new { companyId = companyToReturn.Id }, companyToReturn);
+        }
     }
 }

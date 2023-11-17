@@ -8,6 +8,7 @@ namespace JobTracker.Models.MappingProfiles
         public JobProfile()
         {
             CreateMap<Job, JobDto>();
+            CreateMap<JobForCreationDto, Job>();
         }
     }
 }

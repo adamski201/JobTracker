@@ -28,5 +28,28 @@ namespace JobTracker.Data_Access.Repositories
 
             return await GetCompaniesAsync();
         }
+
+        public async Task<Company?> GetCompanyAsync(int companyId)
+        {
+            return await _context.Companies.Where(c => c.Id == companyId).FirstOrDefaultAsync();
+        }
+
+        public async Task<Company?> GetCompanyAsync(int companyId, bool includeJob)
+        {
+            if (includeJob)
+            {
+                return await _context.Companies.Where(c => c.Id == companyId).Include(c => c.Jobs)
+                    .FirstOrDefaultAsync();
+            }
+
+            return await GetCompanyAsync(companyId);
+        }
+
+        public async Task<bool> AddCompanyAsync(Company company)
+        {
+            await _context.Companies.AddAsync(company);
+
+            return await _context.SaveChangesAsync() > 0;
+        }
     }
 }

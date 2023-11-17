@@ -1,4 +1,5 @@
-﻿using JobTracker.Domain.Entities;
+﻿using AutoMapper.Configuration.Conventions;
+using JobTracker.Domain.Entities;
 
 namespace JobTracker.Data_Access.Repositories
 {
@@ -6,6 +7,9 @@ namespace JobTracker.Data_Access.Repositories
     {
         Task<IEnumerable<Company>> GetCompaniesAsync();
         Task<IEnumerable<Company>> GetCompaniesAsync(bool includeJobs);
+        Task<Company?> GetCompanyAsync(int companyId);
+        Task<Company?> GetCompanyAsync(int companyId, bool includeJob);
+        Task<bool> AddCompanyAsync(Company company);
         
     }
 }
