@@ -4,6 +4,7 @@ using JobTracker.Domain.Entities;
 using JobTracker.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Diagnostics;
+using SQLitePCL;
 
 namespace JobTracker.Controllers
 {
@@ -69,6 +70,23 @@ namespace JobTracker.Controllers
             var companyToReturn = _mapper.Map<CompanyDto>(companyToCreate);
 
             return CreatedAtRoute("GetCompany", new { companyId = companyToReturn.Id }, companyToReturn);
+        }
+
+        [HttpDelete]
+        public async Task<IActionResult> RemoveCompany(int companyId)
+        {
+            var company = await _companyRepository.GetCompanyAsync(companyId);
+            if (company == null)
+            {
+                return NotFound();
+            }
+
+            if (!await _companyRepository.DeleteCompanyAsync(company))
+            {
+                return StatusCode(500, "An error occurred while handling your request.");
+            }
+
+            return NoContent();
         }
     }
 }

@@ -51,5 +51,12 @@ namespace JobTracker.Data_Access.Repositories
 
             return await _context.SaveChangesAsync() > 0;
         }
+
+        public async Task<bool> DeleteCompanyAsync(Company company)
+        {
+            _context.Companies.Remove(company);
+
+            return await _context.SaveChangesAsync() > 0;
+        }
     }
 }

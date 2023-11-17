@@ -10,6 +10,6 @@ namespace JobTracker.Data_Access.Repositories
         Task<Company?> GetCompanyAsync(int companyId);
         Task<Company?> GetCompanyAsync(int companyId, bool includeJob);
         Task<bool> AddCompanyAsync(Company company);
-        
+        Task<bool> DeleteCompanyAsync(Company company);
     }
 }
