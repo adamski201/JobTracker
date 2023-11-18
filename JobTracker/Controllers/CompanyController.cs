@@ -88,5 +88,26 @@ namespace JobTracker.Controllers
 
             return NoContent();
         }
+
+        [HttpPatch]
+        public async Task<IActionResult> UpdateCompany(int companyId, CompanyForUpdateDto company)
+        {
+            if (company == null)
+            {
+                return BadRequest();
+            }
+
+            var companyToUpdate = await _companyRepository.GetCompanyAsync(companyId);
+            if (companyToUpdate == null)
+            {
+                return NotFound();
+            }
+
+            _mapper.Map(company, companyToUpdate);
+
+            await _companyRepository.SaveChangesAsync();
+
+            return NoContent();
+        }
     }
 }
