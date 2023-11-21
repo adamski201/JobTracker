@@ -10,20 +10,7 @@ namespace JobTracker.Domain.Entities
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         public Job Job { get; set; }
-        public int JobId { get; set; }
-        public ICollection<Interview> Interviews { get; set; } = new List<Interview>();
-        public DateTime InitialDateAdvertised { get; set; }
         public DateTime InitialApplicationDate { get; set; }
-        public DateTime Deadline { get; set; }
         public ApplicationStatus Status { get; set; }
-    }
-
-    public enum ApplicationStatus
-    {
-        Interested,
-        Applied,
-        Interviewing,
-        Rejected,
-        Success
     }
 }

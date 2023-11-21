@@ -6,6 +6,7 @@ namespace JobTracker.Models
     {
         public int Id { get; set; }
         public string JobTitle { get; set; }
+        public string Company { get; set; }
         public Salary? Salary { get; set; }
         public Location? Location { get; set; }
     }

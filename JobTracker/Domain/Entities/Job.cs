@@ -11,8 +11,8 @@ namespace JobTracker.Domain.Entities
         public int Id { get; set; }
         [Required]
         public string JobTitle { get; set; }
-        public Company Company { get; set; }
-        public int CompanyId { get; set; }
+        public string Company { get; set; }
+        public int JobApplicationId { get; set; }
         [DataType(DataType.Currency)]
         public Salary? Salary { get; set; }
         public Location? Location { get; set; }

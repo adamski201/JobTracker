@@ -10,11 +10,11 @@
         "projectUniqueName": "C:\\Dev\\JobTracker\\JobTracker\\JobTracker.csproj",
         "projectName": "JobTracker",
         "projectPath": "C:\\Dev\\JobTracker\\JobTracker\\JobTracker.csproj",
-        "packagesPath": "C:\\Users\\lanst\\.nuget\\packages\\",
+        "packagesPath": "C:\\Users\\Adam\\.nuget\\packages\\",
         "outputPath": "C:\\Dev\\JobTracker\\JobTracker\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\lanst\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Adam\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -90,7 +90,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.403\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.401\\RuntimeIdentifierGraph.json"
         }
       }
     }

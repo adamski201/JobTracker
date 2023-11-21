@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace JobTracker.Models
 {
-    public class JobForCreationDto
+    public class JobApplicationForUpdateDto
     {
         public string JobTitle { get; set; }
         public string Company { get; set; }

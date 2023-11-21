@@ -25,7 +25,7 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
-builder.Services.AddScoped<ICompanyRepository, CompanyRepository>();
+builder.Services.AddScoped<IJobApplicationRepository, JobApplicationRepository>();
 
 var app = builder.Build();
 
