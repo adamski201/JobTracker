@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using SQLitePCL;
+using System.Text.Json;
 
 namespace JobTracker.Controllers
 {
@@ -15,7 +16,7 @@ namespace JobTracker.Controllers
     {
         private readonly IJobApplicationRepository _repository;
         private readonly IMapper _mapper;
-        private const int maxPageSize = 10;
+        private readonly int maxPageSize = 10;
 
         public JobApplicationController(IJobApplicationRepository repository, IMapper mapper)
         {
@@ -24,9 +25,16 @@ namespace JobTracker.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetJobApplications(bool includeJob = false)
+        public async Task<IActionResult> GetJobApplications(bool includeJob = false, int pageNumber = 1, int pageSize = 10)
         {
-            var applications = await _repository.GetJobApplicationsAsync(includeJob);
+            if (pageSize > maxPageSize)
+            {
+                pageSize = maxPageSize;
+            }
+
+            var (applications, paginationMetadata) = await _repository.GetJobApplicationsAsync(includeJob, pageNumber, pageSize);
+
+            Response.Headers.Add("X-Pagination", JsonSerializer.Serialize(paginationMetadata));
 
             if (includeJob)
             {

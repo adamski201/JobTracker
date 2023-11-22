@@ -1,5 +1,6 @@
 ﻿using JobTracker.Domain.DbContexts;
 using JobTracker.Domain.Entities;
+using JobTracker.Services;
 using Microsoft.EntityFrameworkCore;
 using System;
 
@@ -19,15 +20,28 @@ namespace JobTracker.Data_Access.Repositories
             return await _context.JobApplications.OrderBy(a => a.Job.JobTitle).ToListAsync();
         }
 
-        public async Task<IEnumerable<JobApplication>> GetJobApplicationsAsync(bool includeJob)
+        public async Task<(IEnumerable<JobApplication>, PaginationMetadata)> GetJobApplicationsAsync(bool includeJob, int pageNumber = 1, int pageSize = 10)
         {
+            var totalItemCount = await _context.JobApplications.CountAsync();
+            PaginationMetadata paginationMetadata = new(totalItemCount, pageSize, pageNumber);
+
             if (includeJob)
             {
-                return await _context.JobApplications.Include(a => a.Job)
-                    .OrderBy(a => a.Job.JobTitle).ToListAsync();
+                var applicationsWithJobs = await _context.JobApplications
+                    .Skip((pageNumber - 1) * pageSize)
+                    .Take(pageSize)
+                    .Include(a => a.Job)
+                    .ToListAsync();
+
+                return (applicationsWithJobs, paginationMetadata);
             }
 
-            return await GetJobApplicationsAsync();
+            var applications = await _context.JobApplications
+                    .Skip((pageNumber - 1) * pageSize)
+                    .Take(pageSize)
+                    .ToListAsync();
+
+            return (applications, paginationMetadata);
         }
 
         public async Task<JobApplication?> GetJobApplicationAsync(int applicationId)
