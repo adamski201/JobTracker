@@ -5,9 +5,8 @@ namespace JobTracker.Models
 {
     public class JobApplicationForUpdateDto
     {
-        public string JobTitle { get; set; }
-        public string Company { get; set; }
-        public Salary? Salary { get; set; }
-        public Location? Location { get; set; }
+        public JobForUpdateDto Job { get; set; }
+        public DateTime InitialApplicationDate { get; set; }
+        public ApplicationStatus Status { get; set; }
     }
 }

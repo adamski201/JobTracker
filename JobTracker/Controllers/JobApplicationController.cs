@@ -2,6 +2,7 @@
 using JobTracker.Data_Access.Repositories;
 using JobTracker.Domain.Entities;
 using JobTracker.Models;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using SQLitePCL;
@@ -14,6 +15,7 @@ namespace JobTracker.Controllers
     {
         private readonly IJobApplicationRepository _repository;
         private readonly IMapper _mapper;
+        private const int maxPageSize = 10;
 
         public JobApplicationController(IJobApplicationRepository repository, IMapper mapper)
         {
@@ -89,7 +91,7 @@ namespace JobTracker.Controllers
             return NoContent();
         }
 
-        [HttpPatch]
+        [HttpPut]
         public async Task<IActionResult> UpdateJobApplication(int applicationId, JobApplicationForUpdateDto application)
         {
             if (application == null)
@@ -104,6 +106,37 @@ namespace JobTracker.Controllers
             }
 
             _mapper.Map(application, applicationToUpdate);
+
+            await _repository.SaveChangesAsync();
+
+            return NoContent();
+        }
+
+        [HttpPatch]
+        public async Task<IActionResult> PartiallyUpdateJobApplication(int applicationId, JsonPatchDocument<JobApplicationForUpdateDto> patchDocument)
+        {
+            var application = await _repository.GetJobApplicationAsync(applicationId, true);
+
+            if (application == null)
+            {
+                return NotFound();
+            }
+
+            var applicationToUpdate = _mapper.Map<JobApplicationForUpdateDto>(application);
+
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            patchDocument.ApplyTo(applicationToUpdate);
+
+            if (!TryValidateModel(applicationToUpdate))
+            {
+                return BadRequest(ModelState);
+            }
+
+            _mapper.Map(applicationToUpdate, application);
 
             await _repository.SaveChangesAsync();
 

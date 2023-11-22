@@ -10,6 +10,8 @@ namespace JobTracker.Models.MappingProfiles
             CreateMap<JobApplicationForCreationDto, JobApplication>();
             CreateMap<JobApplication, JobApplicationDto>();
             CreateMap<JobApplication, JobApplicationWithoutJobDto>();
+            CreateMap<JobApplication, JobApplicationForUpdateDto>();
+            CreateMap<JobApplicationForUpdateDto, JobApplication>();
         }
     }
 }
